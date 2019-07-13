@@ -16,7 +16,7 @@
     "fs": "0.0.1-security",
     "fs-exists-sync": "^0.1.0",
     "glue": "^5.0.0",
-    "jQuery": "^1.7.4",
+    "jQuery": "^>=3.4.0",
     "jade": "~1.11.0",
     "jsdom": "^11.3.0",
     "log4js": "^2.3.12",
