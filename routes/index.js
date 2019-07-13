@@ -8,6 +8,10 @@ router.post('/', function(req, res){
   console.log("masuk");
 });
 
+router.post('/example', function(req, res){
+  console.log("example of jade");
+});
+
 router.post('/hit', function(req, res) {
   batchController.chargeBatchStart(req,res);
 });
