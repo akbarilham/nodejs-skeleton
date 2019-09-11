@@ -1,0 +1,9 @@
+CHANGELOG
+LICENSE
+/node_modules
+/public
+/controllers
+.git
+.env
+README.md
+nohup.out
