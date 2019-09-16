@@ -4,7 +4,7 @@ var tableName = 'coba'
 
 var model = (function(){
 
-	var UsersHistories = sequelize.define(tableName, {
+	var Example = sequelize.define(tableName, {
 	    view_time: {
 	    	type: Sequelize.DATE,
 	    	unique: true,
@@ -30,10 +30,10 @@ var model = (function(){
 	    	unique: true,
 	    	allowNull: false
 	    }
-	});
+	})
 
 	return {
-		UsersHistories
+		Example
 	}
 
 })()

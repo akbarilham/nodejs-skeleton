@@ -7,3 +7,4 @@ LICENSE
 .env
 README.md
 nohup.out
+package-lock.json

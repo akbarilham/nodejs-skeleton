@@ -1,6 +1,6 @@
 {
-  "name": "transavia-service-users-histories",
-  "version": "0.0.0",
+  "name": "nodejs-skeleton",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -12,6 +12,7 @@
     "env2": "*",
     "express": "*",
     "express-validator": "*",
+    "jsonwebtoken": "^8.5.1",
     "moment": "*",
     "morgan": "*",
     "mysql": "^2.17.1",

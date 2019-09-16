@@ -1,59 +1,62 @@
 require('env2')('.env')
-const moment = require("moment")
-const async = require('async')
 const model = require("./model")
 
 var controller = (function(){
 
 	var Select = async function(request, response, next){
 		try {
-			var usershistories = await model.UsersHistories.findAll({})
-			if (usershistories.length !== 0) {
+			var example = await model.Example.findAll({})
+			if (example.length !== 0) {
+				response.json({
+					data: example,
+					code: "200",
+					message: "Success",
+					// currentpage: 1,
+					// perpage: 1,
+					// totalpage: 1,
+					lastpage: 1
+				})
+			} else {
+				response.status(204).send({message: "Data Empty"})
+			}
+		} catch (error) {
+			response.status(404).send({message: error.message})
+		}
+	}
+
+	var Search = async function(request, response, next){ 
+		try {
+			var example = await model.Example.findAll({})
+			if (example.length !== 0) {
 				response.json({
 					code: "200",
 					message: "Success",
-					data: usershistories
+					data: example
 				})
 			} else {
-				response.json({
-					code: "204",
-					message: "Data empty",
-					data: {}
-				})
+				response.status(204).send({message: "Data Empty"})
 			}
 		} catch (error) {
-			response.json({
-				code: "404",
-				message: error.message,
-				data: {}
-			})
+			response.status(404).send({message: error.message})
 		}
 	}
 
 	var SelectById = async function(request, response, next){
 		try {
-			var usershistories = await model.UsersHistories.findOne({
+			var example = await model.Example.findOne({
 				where: {id: request.body.id}
 			})
-			if (usershistories.length !== 0) {
+			if (example.length !== 0) {
 				response.json({
 					code: "200",
 					message: "Success",
-					data: usershistories
+					data: example
 				})
 			} else {
-				response.json({
-					code: "204",
-					message: "Data empty",
-					data: {}
-				})
+				response.status(204).send({message: "Data Empty"})
 			}
 		} catch (error) {
-			response.json({
-				code: "404",
-				message: error.message,
-				data: {}
-			})
+			response.status(404).send({message: error.message})
 		}
 	}
 
@@ -66,32 +69,28 @@ var controller = (function(){
 				referrer,
 				device_type
 			} = request.body
-			var usershistories = await model.UsersHistories.create({
+			var example = await model.Example.create({
 				view_time,
 				url,
 				user_agent,
 				referrer,
 				device_type
 			})
-			if (usershistories) {
+			if (example) {
 				response.json({
 					code: "200",
 					message: "Insert success",
-					data: usershistories
+					data: example
 				})
 			}
 		} catch (error) {
-			response.json({
-				code: "404",
-				message: error.message,
-				data: {}
-			})
+			response.status(404).send({message: error.message})
 		}
 	}
 
 	var Update = async function(request, response, next){
 		try {
-			var usershistoriesID = request.body.id
+			var exampleID = request.body.id
 			var {
 				view_time,
 				url,
@@ -99,7 +98,7 @@ var controller = (function(){
 				referrer,
 				device_type
 			} = request.body
-			var usershistories = await model.UsersHistories.update({
+			var example = await model.Example.update({
 				view_time,
 				url,
 				user_agent,
@@ -107,50 +106,39 @@ var controller = (function(){
 				device_type
 			},{
 				where: {
-					id: usershistoriesID
+					id: exampleID
 				}
 			})
-			if (usershistories) {
+			if (example) {
 				response.json({
 					code: "200",
 					message: "Update success",
-					data: usershistories
+					data: example
 				})
 			}
 		} catch (error) {
-			response.json({
-				code: "404",
-				message: error.message,
-				data: {}
-			})
+			response.status(404).send({message: error.message})
 		}
 	}
 
-	var Delete = function(request, response){
+	var Delete = async function(request, response, next){
 		try {
-			var usershistoriesID = request.body.id
-			var usershistories = await model.UsersHistories.destroy({
+			var exampleID = request.body.id
+			var example = await model.Example.destroy({
 				where: {
-					id: usershistoriesID
+					id: exampleID
 				}
 			})
-			if (usershistories) {
+			if (example) {
 				response.json({
 					code: "200",
 					message: "Delete success",
-					data: usershistories
+					data: example
 				})
 			}
 		} catch (error) {
-			response.json({
-				code: "404",
-				message: error.message,
-				data: {}
-			})
+			response.status(404).send({message: error.message})
 		}
-	}
-
-	var Search = function(request, response){ 
 	}
 
 	return {
