@@ -72,7 +72,7 @@ var controller = (function(){
 
 	var Update = async function(response, data, pagination){
 		try {
-			var example = await model.Example.update({data},{where: {id: data.id} })
+			var example = await model.Example.update({data}, {where: {id: data.id} })
 			if (example) {
 				response.status(200).send({message: "Update success"})
 			}

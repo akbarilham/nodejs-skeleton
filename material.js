@@ -34,18 +34,18 @@ var material = (function(){
 	}
 
 	var Insert = function(request, response){
-		var data = { 
+        var data = { 
 			view_time: request.body.view_time, 
 			url: request.body.url,
 			user_agent: request.body.user_agent,
 			referrer: request.body.referrer,
 			device_type: request.body.device_type
-		}
+        }
 		controller.Insert(response, data, false)
 	}
 
 	var Update = function(request, response){
-		var data = { 
+        var data = { 
             id: request.body.id,
 			view_time: request.body.view_time, 
 			url: request.body.url,
