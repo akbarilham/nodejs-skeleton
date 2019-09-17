@@ -1,34 +1,28 @@
-var express = require('express')
-var routes = express.Router()
-var jwt_token = require('./jwt_token')
-var controller = require('./controller')
+var material = require('./material')
+var auth = require('./authorization')
 
-routes.post('/login', function(req, res, next) {
-	controller.Login(req, res, next)
+auth.route('/select').post(function(request, response) {
+	material.Select(request, response)
 })
 
-routes.post('/select', jwt_token, function(request, response, next) {
-	controller.Select(request, response, next)
+auth.route('/select-by-id').post(function(request, response) {
+	material.SelectById(request, response)
 })
 
-routes.post('/select-by-id', jwt_token, function(request, response, next) {
-	controller.SelectById(request, response, next)
+auth.route('/insert').post(function(request, response) {
+	material.Insert(request, response)
 })
 
-routes.post('/insert', jwt_token, function(request, response, next) {
-	controller.Insert(request, response, next)
+auth.route('/update').post(function(request, response) {
+	material.Update(request, response)
 })
 
-routes.post('/update', jwt_token, function(request, response, next) {
-	controller.Update(request, response, next)
+auth.route('/delete').post(function(request, response) {
+	material.Delete(request, response)
 })
 
-routes.post('/delete', jwt_token, function(request, response, next) {
-	controller.Delete(request, response, next)
+auth.route('/search').post(function(request, response) {
+	material.Search(request, response)
 })
 
-routes.post('/search', jwt_token, function(request, response, next) {
-	controller.Search(request, response, next)
-})
-
-module.exports = routes;
+module.exports = auth

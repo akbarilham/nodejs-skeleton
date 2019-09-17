@@ -3,33 +3,35 @@ const model = require("./model")
 
 var controller = (function(){
 
-	var Select = async function(request, response, next){
+	var Select = async function(response, data, pagination){
 		try {
-			var example = await model.Example.findAll({})
+			var example = await model.Example.findAndCountAll({
+				limit: 2,
+				offset: 0
+			})
+			// var example = await model.Example.findAll({})
 			if (example.length !== 0) {
-				response.json({
+				response.status(200).send({
 					data: example,
-					code: "200",
-					message: "Success",
-					// currentpage: 1,
-					// perpage: 1,
-					// totalpage: 1,
-					lastpage: 1
+					message: "Search Success",
+					currentPage: 1,
+					perPage: 2,
+					totalPage: Math.ceil(example.count / 2)
 				})
 			} else {
 				response.status(204).send({message: "Data Empty"})
 			}
 		} catch (error) {
+			console.log("Errornya adalah ... " + error)
 			response.status(404).send({message: error.message})
 		}
 	}
 
-	var Search = async function(request, response, next){ 
+	var Search = async function(response, data, pagination){ 
 		try {
 			var example = await model.Example.findAll({})
 			if (example.length !== 0) {
-				response.json({
-					code: "200",
+				response.status(200).send({
 					message: "Success",
 					data: example
 				})
@@ -41,14 +43,11 @@ var controller = (function(){
 		}
 	}
 
-	var SelectById = async function(request, response, next){
+	var SelectById = async function(response, data, pagination){
 		try {
-			var example = await model.Example.findOne({
-				where: {id: request.body.id}
-			})
+			var example = await model.Example.findOne({where: {id: data.id}	})
 			if (example.length !== 0) {
-				response.json({
-					code: "200",
+				response.status(200).send({
 					message: "Success",
 					data: example
 				})
@@ -60,81 +59,33 @@ var controller = (function(){
 		}
 	}
 
-	var Insert = async function(request, response, next){
+	var Insert = async function(response, data, pagination){
 		try {
-			var {
-				view_time,
-				url,
-				user_agent,
-				referrer,
-				device_type
-			} = request.body
-			var example = await model.Example.create({
-				view_time,
-				url,
-				user_agent,
-				referrer,
-				device_type
-			})
+			var example = await model.Example.create({data})
 			if (example) {
-				response.json({
-					code: "200",
-					message: "Insert success",
-					data: example
-				})
+				response.status(200).send({message: "Insert success"})
 			}
 		} catch (error) {
 			response.status(404).send({message: error.message})
 		}
 	}
 
-	var Update = async function(request, response, next){
+	var Update = async function(response, data, pagination){
 		try {
-			var exampleID = request.body.id
-			var {
-				view_time,
-				url,
-				user_agent,
-				referrer,
-				device_type
-			} = request.body
-			var example = await model.Example.update({
-				view_time,
-				url,
-				user_agent,
-				referrer,
-				device_type
-			},{
-				where: {
-					id: exampleID
-				}
-			})
+			var example = await model.Example.update({data},{where: {id: data.id} })
 			if (example) {
-				response.json({
-					code: "200",
-					message: "Update success",
-					data: example
-				})
+				response.status(200).send({message: "Update success"})
 			}
 		} catch (error) {
 			response.status(404).send({message: error.message})
 		}
 	}
 
-	var Delete = async function(request, response, next){
+	var Delete = async function(response, data, pagination){
 		try {
-			var exampleID = request.body.id
-			var example = await model.Example.destroy({
-				where: {
-					id: exampleID
-				}
-			})
+			var example = await model.Example.destroy({where: {id: data.id} })
 			if (example) {
-				response.json({
-					code: "200",
-					message: "Delete success",
-					data: example
-				})
+				response.status(200).send({message: "Delete success"})
 			}
 		} catch (error) {
 			response.status(404).send({message: error.message})

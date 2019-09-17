@@ -12,6 +12,7 @@
     "env2": "*",
     "express": "*",
     "express-validator": "*",
+    "helmet": "^3.21.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "*",
     "morgan": "*",

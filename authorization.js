@@ -1,7 +1,9 @@
 var jwt = require('jsonwebtoken')
+var express = require('express')
+var authorization = express.Router()
 
-module.exports = function (request, response, next) {
-	var token = request.body.token || request.query.token || request.headers.authorization
+authorization.use(function(request, response, next) {
+	var token = request.body.token || request.query.token || request.headers.authorisation
 	if (token) {
 		jwt.verify(token, 'jwtsecret', function(error, decoded){
 			if (error) {
@@ -14,4 +16,6 @@ module.exports = function (request, response, next) {
 	} else {
 		return response.status(403).send({message: 'No token provided.'})
 	}
-}
+})
+
+module.exports = authorization
