@@ -2,9 +2,10 @@ CHANGELOG
 LICENSE
 /node_modules
 /public
-/controllers
+/config
 .git
 .env
-README.md
 nohup.out
 package-lock.json
+pagination.js
+*.toml

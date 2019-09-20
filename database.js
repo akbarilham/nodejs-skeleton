@@ -1,10 +1,12 @@
-require('env2')('.env')
 const Sequelize = require('sequelize')
+const fs = require('fs')
+const toml = require('toml')
+const dbConfig = toml.parse(fs.readFileSync('config/database.toml', 'utf-8'))
 
-const sequelize = new Sequelize(process.env.DB_SCHEMA, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORT,
-	dialect: process.env.DB_CONNECTION,
+const sequelize = new Sequelize(dbConfig.DB_SCHEMA, dbConfig.DB_USERNAME, dbConfig.DB_PASSWORD, {
+	host: dbConfig.DB_HOST,
+	port: dbConfig.DB_PORT,
+	dialect: dbConfig.DB_CONNECTION,
 	pool: {
 		max: 10,
 		min: 0,
@@ -12,10 +14,9 @@ const sequelize = new Sequelize(process.env.DB_SCHEMA, process.env.DB_USERNAME, 
 		idle: 10000,
 	},
 	logging: false,
-    define: {
-        freezeTableName: true,
-        timestamps: false
-    },	
+	define: {
+        freezeTableName: true
+    }
 })
 
 sequelize

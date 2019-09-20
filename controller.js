@@ -3,30 +3,6 @@ const model = require("./model")
 
 var controller = (function(){
 
-	var Select = async function(response, data, pagination){
-		try {
-			var example = await model.Example.findAndCountAll({
-				limit: 2,
-				offset: 0
-			})
-			// var example = await model.Example.findAll({})
-			if (example.length !== 0) {
-				response.status(200).send({
-					data: example,
-					message: "Search Success",
-					currentPage: 1,
-					perPage: 2,
-					totalPage: Math.ceil(example.count / 2)
-				})
-			} else {
-				response.status(204).send({message: "Data Empty"})
-			}
-		} catch (error) {
-			console.log("Errornya adalah ... " + error)
-			response.status(404).send({message: error.message})
-		}
-	}
-
 	var Search = async function(response, data, pagination){ 
 		try {
 			var example = await model.Example.findAll({})
@@ -34,6 +10,28 @@ var controller = (function(){
 				response.status(200).send({
 					message: "Success",
 					data: example
+				})
+			} else {
+				response.status(204).send({message: "Data Empty"})
+			}
+		} catch (error) {
+			response.status(404).send({message: error.message})
+		}
+	}
+
+	var Select = async function(response, data, pagination){
+		try {
+			var example = await model.Example.findAndCountAll({
+				limit: pagination.limit,
+				offset: pagination.offset
+			})
+			// var example = await model.Example.findAll({})
+			if (example.length !== 0) {
+				response.status(200).send({
+					data: example,
+					message: "Search Success",
+					currentPage: pagination.page,
+					totalPage: Math.ceil(example.count / pagination.pageSize)
 				})
 			} else {
 				response.status(204).send({message: "Data Empty"})
@@ -61,7 +59,7 @@ var controller = (function(){
 
 	var Insert = async function(response, data, pagination){
 		try {
-			var example = await model.Example.create({data})
+			var example = await model.Example.create(data)
 			if (example) {
 				response.status(200).send({message: "Insert success"})
 			}
@@ -72,7 +70,7 @@ var controller = (function(){
 
 	var Update = async function(response, data, pagination){
 		try {
-			var example = await model.Example.update({data}, {where: {id: data.id} })
+			var example = await model.Example.update(data, {where: {id: data.id} })
 			if (example) {
 				response.status(200).send({message: "Update success"})
 			}
@@ -93,12 +91,12 @@ var controller = (function(){
 	}
 
 	return {
+		Search,
 		Select,
 		SelectById,
 		Insert,
 		Update,
-		Delete,
-		Search
+		Delete
 	}
 
 })()

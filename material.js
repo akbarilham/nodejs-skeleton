@@ -15,10 +15,15 @@ var material = (function(){
 	}
 
 	var Select = function(request, response){
-		var pagination={ 
-			pageSize: request.body.pageSize,
-			page: request.body.page
-		}
+		var offset = request.body.page * request.body.pageSize
+		var limit = offset + request.body.pageSize
+		var skip = request.body.pageSize * (request.body.page - 1)
+		var pagination = {} 
+		pagination.pageSize = request.body.pageSize // How many records per page
+		pagination.page = request.body.page // The number of the page
+		pagination.limit = limit
+		pagination.offset = offset
+		pagination.skip = skip
 		controller.Select(response, false, pagination)
 	}
 

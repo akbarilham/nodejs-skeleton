@@ -24,6 +24,7 @@
     "redis-session": "*",
     "sequelize": "^5.18.4",
     "serve-favicon": "*",
+    "toml": "^3.0.0",
     "validate.js": "*",
     "validator": "*"
   },

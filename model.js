@@ -1,6 +1,10 @@
+const fs = require('fs')
+const toml = require('toml')
+const tableConfig = toml.parse(fs.readFileSync('config/table.toml', 'utf-8'))
+
 const sequelize = require("./database").sequelize
 const Sequelize = require('sequelize')
-var tableName = 'coba'
+var tableName = tableConfig.TableName
 
 var model = (function(){
 
@@ -29,7 +33,13 @@ var model = (function(){
 	    	type: Sequelize.INTEGER,
 	    	unique: true,
 	    	allowNull: false
-	    }
+		}
+	},{
+		createdAt: tableConfig.CreatedAt,
+		updatedAt: tableConfig.UpdatedAt,
+		deletedAt: tableConfig.DeletedAt,
+		timestamps: true,
+		paranoid: true
 	})
 
 	return {
