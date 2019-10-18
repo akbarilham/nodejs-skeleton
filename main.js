@@ -1,5 +1,4 @@
 'use strict'
-require('env2')('.env')
 
 const express = require('express')
 const morgan = require('morgan')

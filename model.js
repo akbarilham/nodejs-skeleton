@@ -4,11 +4,11 @@ const tableConfig = toml.parse(fs.readFileSync('config/table.toml', 'utf-8'))
 
 const sequelize = require("./database").sequelize
 const Sequelize = require('sequelize')
-var tableName = tableConfig.TableName
+var tableName = tableConfig.TABLENAME
 
 var model = (function(){
 
-	var Example = sequelize.define(tableName, {
+	var example = sequelize.define(tableName, {
 	    view_time: {
 	    	type: Sequelize.DATE,
 	    	unique: true,
@@ -35,15 +35,15 @@ var model = (function(){
 	    	allowNull: false
 		}
 	},{
-		createdAt: tableConfig.CreatedAt,
-		updatedAt: tableConfig.UpdatedAt,
-		deletedAt: tableConfig.DeletedAt,
+		createdAt: tableConfig.CREATEDAT,
+		updatedAt: tableConfig.UPDATEAT,
+		deletedAt: tableConfig.DELETEDAT,
 		timestamps: true,
 		paranoid: true
 	})
 
 	return {
-		Example
+		example
 	}
 
 })()

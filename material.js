@@ -68,14 +68,28 @@ var material = (function(){
 		controller.Delete(response, data, false)
 	}
 
+	var PushNotification = function(request, response){
+		var data = {
+			title: request.body.title,
+			message: request.body.message,
+			url: request.body.url,
+			ttl: request.body.ttl,
+			icon: request.body.icon,
+			image: request.body.image,
+			badge: request.body.badge,
+			tag: request.body.tag
+		}
+		controller.PushNotification(response, data, false)
+	}
+
 	return {
-		// Plaza //
 		Search,
         Select,
         SelectById,
 		Insert,
 		Update,
-		Delete
+		Delete,
+		PushNotification
 	}
 
 })()
